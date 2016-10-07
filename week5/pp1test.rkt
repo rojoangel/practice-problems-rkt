@@ -21,6 +21,15 @@
    (check-equal? (car ((cdr ((cdr ((cdr (fibonacci)))))))) 2         ".. and 2 ..")
    (check-equal? (car ((cdr ((cdr ((cdr ((cdr (fibonacci)))))))))) 3 ".. and 3 ..")
 
+   ; stream until tests
+   (check-equal? (stream-until (lambda (x) (< x 0)) fibonacci) 0
+                 "stream-until test using fibonacci")
+   (check-equal? (stream-until (lambda (x) (< x 1)) fibonacci) 1
+                 "stream-until test using fibonacci")
+   (check-equal? (stream-until (lambda (x) (< x 30)) fibonacci) 34
+                 "stream-until test using fibonacci")
+   (check-equal? (stream-until (lambda (x) (< x 1000)) fibonacci) 1597
+                 "stream-until test using fibonacci")
    ))
 
 (require rackunit/text-ui)

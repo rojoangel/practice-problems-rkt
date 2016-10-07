@@ -29,3 +29,14 @@
                          new-ans)))))]
           [f (lambda (x) (cons (fib x) (lambda () (f (+ x 1)))))])
     (lambda() (f 1))))
+
+;; Write a function stream-until that takes a function f and a stream s, and applies
+;; f to the values of s in succession until f evaluates to #f.
+(define (stream-until f s)
+  (let* ([stream (s)]
+         [val (car stream)])
+    (if (f val)
+        (stream-until f (cdr stream))
+        val)))
+
+  
