@@ -11,3 +11,21 @@
   (map (lambda (i j) (+ i j))
        (reverse xs)
        xs))
+
+;; Define a stream fibonacci, the first element of which is 0, the second one is 1,
+;; and each successive element is the sum of two immediately preceding elements.
+(define fibonacci
+  (letrec([memo null] ; list of pairs (arg . result) 
+          [fib (lambda (x)
+               (let ([ans (assoc x memo)])
+                 (if ans 
+                     (cdr ans)
+                     (let ([new-ans (cond [(= x 1) 0]
+                                          [(= x 2) 1]
+                                          [#t (+ (fib (- x 1))
+                                                 (fib (- x 2)))])])
+                       (begin 
+                         (set! memo (cons (cons x new-ans) memo))
+                         new-ans)))))]
+          [f (lambda (x) (cons (fib x) (lambda () (f (+ x 1)))))])
+    (lambda() (f 1))))

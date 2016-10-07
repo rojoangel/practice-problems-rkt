@@ -14,6 +14,13 @@
    (check-equal? (palindromic (list 1 2 4)) (list 5 4 5) "palindromic 3 elems list test")
    (check-equal? (palindromic (list 1 2 4 8)) (list 9 6 6 9) "palindromic 4 elems list test")
 
+   ; fibonacci tests
+   (check-equal? (car (fibonacci)) 0                  "fibonacci starts with 0 ..")
+   (check-equal? (car ((cdr (fibonacci)))) 1              ".. continues with 1 ..")
+   (check-equal? (car ((cdr ((cdr (fibonacci)))))) 1                 ".. and 1 ..")
+   (check-equal? (car ((cdr ((cdr ((cdr (fibonacci)))))))) 2         ".. and 2 ..")
+   (check-equal? (car ((cdr ((cdr ((cdr ((cdr (fibonacci)))))))))) 3 ".. and 3 ..")
+
    ))
 
 (require rackunit/text-ui)
