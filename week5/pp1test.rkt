@@ -69,7 +69,14 @@
      (check-equal? (car ((cdr ((cdr ((cdr (interleaved)))))))) 1                 "continues with 1")
      (check-equal? (car ((cdr ((cdr ((cdr ((cdr (interleaved)))))))))) 2         "continues with 2")
      (check-equal? (car ((cdr ((cdr ((cdr ((cdr ((cdr (interleaved)))))))))))) 3 "continues with 3"))
-   
+
+   ; pack tests
+   (let ([packed-fib (pack 2 fibonacci)])
+     (check-equal? (car (packed-fib)) (list 0 1)                                   "test pack using fib")
+     (check-equal? (car ((cdr (packed-fib)))) (list 1 2)                           "test pack using fib")
+     (check-equal? (car ((cdr ((cdr (packed-fib)))))) (list 3 5)                   "test pack using fib")
+     (check-equal? (car ((cdr ((cdr ((cdr (packed-fib)))))))) (list 8 13)          "test pack using fib")
+     (check-equal? (car ((cdr ((cdr ((cdr ((cdr (packed-fib)))))))))) (list 21 34) "test pack using fib"))
    ))
 (require rackunit/text-ui)
 ;; runs the test

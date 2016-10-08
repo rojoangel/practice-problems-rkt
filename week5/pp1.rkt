@@ -67,3 +67,15 @@
                             (lambda () (f next-xs next-xs)))
                           (lambda () (f xs (cdr used-xs))))))])
     (lambda () (f xs xs))))
+
+;; Define a function pack that takes an integer n and a stream s, and returns a stream
+;; that produces the same values as s but packed in lists of n elements. So the first
+;; value of the new stream will be the list consisting of the first n values of s, the
+;; second value of the new stream will contain the next n values, and so on.
+(define (pack n s)
+  (letrec ([f (lambda (i l s)
+                (if (< i n)
+                    (f (+ i 1) (cons (car (s)) l) (cdr (s)))
+                    (cons (reverse (cons (car (s)) l))
+                          (lambda () (f 1 null (cdr (s)))))))])
+    (lambda () (f 1 null s))))
