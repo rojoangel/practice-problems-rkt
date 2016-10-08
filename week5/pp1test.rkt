@@ -48,6 +48,17 @@
                                (stream-map (lambda (x) (* x 2)) fibonacci))
                  3194
                  "stream-map test using stream-until & fibonacci")
+
+   ; stream-zip tests
+   ;; define fibx2 and fibx3 as helpers
+   (let* ([fibx2 (stream-map (lambda (x) (* x 2)) fibonacci)]
+         [fibx3 (stream-map (lambda (x) (* x 3)) fibonacci)]
+         [zip (stream-zip fibx2 fibx3)])
+     (check-equal? (car (zip)) (cons 0 0)                          "test zip starts with (0 . 0)")
+     (check-equal? (car ((cdr (zip)))) (cons 2 3)                  "continues with  with (2 . 3)")
+     (check-equal? (car ((cdr ((cdr (zip)))))) (cons 2 3)          "continues with  with (2 . 3)")
+     (check-equal? (car (( cdr ((cdr ((cdr (zip)))))))) (cons 4 6) "continues with  with (4 . 6)"))
+   
    ))
 (require rackunit/text-ui)
 ;; runs the test

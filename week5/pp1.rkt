@@ -44,4 +44,12 @@
 (define (stream-map f s)
   (letrec ([aux (lambda (x) (cons (f (car (x))) (lambda () (aux (cdr (x))))))])
     (lambda () (aux s))))
-  
+
+;; Write a function stream-zip that takes in two streams s1 and s2 and returns a
+;; stream that produces the pairs that result from the other two streams (so the first
+;; value for the result stream will be the pair of the first value of s1 and the first
+;; value of s2).
+(define (stream-zip s1 s2)
+  (letrec ([f (lambda (s1 s2) (cons (cons (car (s1)) (car (s2)))
+                                    (lambda () (f (cdr (s1)) (cdr (s2))))))])
+    (lambda () (f s1 s2))))
