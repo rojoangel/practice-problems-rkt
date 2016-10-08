@@ -79,3 +79,15 @@
                     (cons (reverse (cons (car (s)) l))
                           (lambda () (f 1 null (cdr (s)))))))])
     (lambda () (f 1 null s))))
+
+;; We'll use Newton's Method for approximating the square root of a number, but by
+;; producing a stream of ever-better approximations so that clients can "decide later"
+;; how approximate a result they want: Write a function sqrt-stream that takes a number
+;; n, starts with n as an initial guess in the stream, and produces successive guesses
+;; applying fn(x)=1/2((x+n/x) to the current guess.
+(define (sqrt-stream n)
+  (letrec ([f (lambda (guess)
+                (let ([next-guess (/ (+ guess (/ n guess)) 2)])
+                  (cons next-guess 
+                        (lambda () (f next-guess)))))])
+    (lambda () (f n))))

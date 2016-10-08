@@ -77,6 +77,14 @@
      (check-equal? (car ((cdr ((cdr (packed-fib)))))) (list 3 5)                   "test pack using fib")
      (check-equal? (car ((cdr ((cdr ((cdr (packed-fib)))))))) (list 8 13)          "test pack using fib")
      (check-equal? (car ((cdr ((cdr ((cdr ((cdr (packed-fib)))))))))) (list 21 34) "test pack using fib"))
+
+   ; sqrt-stream
+   (let ([sqrt-10 (sqrt-stream 10.0)])
+     (check-equal? (car (sqrt-10)) 5.5                                               "test sqrt-stream aprox 1")
+     (check-equal? (car ((cdr (sqrt-10)))) 3.659090909090909                         "test sqrt-stream aprox 2")
+     (check-equal? (car ((cdr ((cdr (sqrt-10)))))) 3.196005081874647                 "test sqrt-stream aprox 3")
+     (check-equal? (car ((cdr ((cdr ((cdr (sqrt-10)))))))) 3.16245562280389          "test sqrt-stream aprox 4")
+     (check-equal? (car ((cdr ((cdr ((cdr ((cdr (sqrt-10)))))))))) 3.162277665175675 "test sqrt-stream aprox 5"))
    ))
 (require rackunit/text-ui)
 ;; runs the test
