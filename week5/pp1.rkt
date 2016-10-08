@@ -53,3 +53,17 @@
   (letrec ([f (lambda (s1 s2) (cons (cons (car (s1)) (car (s2)))
                                     (lambda () (f (cdr (s1)) (cdr (s2))))))])
     (lambda () (f s1 s2))))
+
+;; Write a function interleave that takes a list of streams and produces a new stream
+;; that takes one element from each stream in sequence. So it will first produce the
+;; first value of the first stream, then the first value of the second stream and so on,
+;; and it will go back to the first stream when it reaches the end of the list.
+;; Try to do this without ever adding an element to the end of a list.
+(define (interleave xs)
+  (letrec ([f (lambda (current-xs used-xs)
+                (cons (car ((car used-xs)))
+                      (if (null? (cdr used-xs))
+                          (let ([next-xs (map (lambda (x) (cdr (x))) current-xs)]) 
+                            (lambda () (f next-xs next-xs)))
+                          (lambda () (f xs (cdr used-xs))))))])
+    (lambda () (f xs xs))))

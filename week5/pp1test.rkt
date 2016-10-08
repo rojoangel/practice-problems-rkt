@@ -59,6 +59,17 @@
      (check-equal? (car ((cdr ((cdr (zip)))))) (cons 2 3)          "continues with  with (2 . 3)")
      (check-equal? (car (( cdr ((cdr ((cdr (zip)))))))) (cons 4 6) "continues with  with (4 . 6)"))
    
+   ; interleave tests
+   (let* ([fibx2 (stream-map (lambda (x) (* x 2)) fibonacci)]
+         [fibx3 (stream-map (lambda (x) (* x 3)) fibonacci)]
+         [interleaved (interleave (list fibonacci fibx2 fibx3))])
+     (check-equal? (car (interleaved)) 0                           "test interleaved starts with 0")
+     (check-equal? (car ((cdr (interleaved)))) 0                                 "continues with 0")
+     (check-equal? (car ((cdr ((cdr (interleaved)))))) 0                         "continues with 0")
+     (check-equal? (car ((cdr ((cdr ((cdr (interleaved)))))))) 1                 "continues with 1")
+     (check-equal? (car ((cdr ((cdr ((cdr ((cdr (interleaved)))))))))) 2         "continues with 2")
+     (check-equal? (car ((cdr ((cdr ((cdr ((cdr ((cdr (interleaved)))))))))))) 3 "continues with 3"))
+   
    ))
 (require rackunit/text-ui)
 ;; runs the test
