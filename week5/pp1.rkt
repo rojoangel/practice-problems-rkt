@@ -105,3 +105,19 @@
                          approx
                          (loop (cdr (stream))))))])
     (loop (sqrt-stream n))))
+
+;; Write a macro perform that has the following two forms:
+;; (perform e1 if e2)
+;; (perform e1 unless e2)
+;; e1 should be evaluated (once) depending on the result of evaluating e2 -- only if
+;; e2 evaluates to #f in the latter case, and only if it doesn't in the former case.
+;; If e1 is never evaluated, the entire expression should evaluate to e2. Neither e1
+;; nor e2 should be evaluated more than once in any case.
+(define-syntax perform
+  (syntax-rules (if unless)
+    [(perform e1 if e2)
+     (let ([pr e2])
+       (if pr e1 pr))]
+    [(perform e1 unless e2)
+     (let ([pr e2])
+       (if pr pr e1))]))

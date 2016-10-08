@@ -78,7 +78,7 @@
      (check-equal? (car ((cdr ((cdr ((cdr (packed-fib)))))))) (list 8 13)          "test pack using fib")
      (check-equal? (car ((cdr ((cdr ((cdr ((cdr (packed-fib)))))))))) (list 21 34) "test pack using fib"))
 
-   ; sqrt-stream
+   ; sqrt-stream tests
    (let ([sqrt-10 (sqrt-stream 10.0)])
      (check-equal? (car (sqrt-10)) 5.5                                               "test sqrt-stream aprox 1")
      (check-equal? (car ((cdr (sqrt-10)))) 3.659090909090909                         "test sqrt-stream aprox 2")
@@ -86,12 +86,19 @@
      (check-equal? (car ((cdr ((cdr ((cdr (sqrt-10)))))))) 3.16245562280389          "test sqrt-stream aprox 4")
      (check-equal? (car ((cdr ((cdr ((cdr ((cdr (sqrt-10)))))))))) 3.162277665175675 "test sqrt-stream aprox 5"))
 
-   ; approx-sqrt
+   ; approx-sqrt tests 
    (check-= 100.0 (* (approx-sqrt 100.0 10.0) (approx-sqrt 100.0 10.0)) 10.0         "test approx-sqrt 100.0 10.0")
    (check-= 100.0 (* (approx-sqrt 100.0 1.0) (approx-sqrt 100.0 1.0)) 1.0             "test approx-sqrt 100.0 1.0")
    (check-= 100.0 (* (approx-sqrt 100.0 0.1) (approx-sqrt 100.0 0.1)) 0.1             "test approx-sqrt 100.0 0.1")
    (check-= 100.0 (* (approx-sqrt 100.0 0.01) (approx-sqrt 100.0 0.01)) 0.01         "test approx-sqrt 100.0 0.01")   
    (check-= 100.0 (* (approx-sqrt 100.0 0.0001) (approx-sqrt 100.0 0.0001)) 0.0001 "test approx-sqrt 100.0 0.0001")   
+
+   ; perform tests
+   (check-equal? (perform "a" if #t) "a" "test perform")
+   (check-equal? (perform "a" if #f) #f "test perform")
+   (check-equal? (perform "a" unless #f) "a" "test perform")
+   (check-equal? (perform "a" unless #t) #t "test perform")
+
    ))
 
 (require rackunit/text-ui)
