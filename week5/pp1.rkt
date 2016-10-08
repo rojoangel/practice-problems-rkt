@@ -91,3 +91,17 @@
                   (cons next-guess 
                         (lambda () (f next-guess)))))])
     (lambda () (f n))))
+
+;; Now use sqrt-stream from the previous problem to define a function approx-sqrt that
+;; takes two numbers n and e and returns a number x such that x⋅x is within e of n.
+;; Be sure not to create more than one stream nor ask for the same value from the
+;; stream more than once. Note: Because Racket defaults to fully precise rational
+;; values, you may wish to use a floating-point number for n (e.g., 10.0 instead of 10)
+;; as well as for e.
+(define (approx-sqrt n e)
+  (letrec ([loop (lambda (stream)
+                   (let ([approx (car (stream))])
+                     (if (< (abs (- (* approx approx) n)) e)
+                         approx
+                         (loop (cdr (stream))))))])
+    (loop (sqrt-stream n))))

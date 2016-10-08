@@ -85,7 +85,15 @@
      (check-equal? (car ((cdr ((cdr (sqrt-10)))))) 3.196005081874647                 "test sqrt-stream aprox 3")
      (check-equal? (car ((cdr ((cdr ((cdr (sqrt-10)))))))) 3.16245562280389          "test sqrt-stream aprox 4")
      (check-equal? (car ((cdr ((cdr ((cdr ((cdr (sqrt-10)))))))))) 3.162277665175675 "test sqrt-stream aprox 5"))
+
+   ; approx-sqrt
+   (check-= 100.0 (* (approx-sqrt 100.0 10.0) (approx-sqrt 100.0 10.0)) 10.0         "test approx-sqrt 100.0 10.0")
+   (check-= 100.0 (* (approx-sqrt 100.0 1.0) (approx-sqrt 100.0 1.0)) 1.0             "test approx-sqrt 100.0 1.0")
+   (check-= 100.0 (* (approx-sqrt 100.0 0.1) (approx-sqrt 100.0 0.1)) 0.1             "test approx-sqrt 100.0 0.1")
+   (check-= 100.0 (* (approx-sqrt 100.0 0.01) (approx-sqrt 100.0 0.01)) 0.01         "test approx-sqrt 100.0 0.01")   
+   (check-= 100.0 (* (approx-sqrt 100.0 0.0001) (approx-sqrt 100.0 0.0001)) 0.0001 "test approx-sqrt 100.0 0.0001")   
    ))
+
 (require rackunit/text-ui)
 ;; runs the test
 (run-tests tests)
