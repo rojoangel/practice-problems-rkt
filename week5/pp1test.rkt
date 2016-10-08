@@ -30,8 +30,25 @@
                  "stream-until test using fibonacci")
    (check-equal? (stream-until (lambda (x) (< x 1000)) fibonacci) 1597
                  "stream-until test using fibonacci")
-   ))
 
+   ; stream-map tests
+   (check-equal? (stream-until (lambda (x) (< x 0))
+                               (stream-map (lambda (x) (* x 2)) fibonacci))
+                 0
+                 "stream-map test using stream-until & fibonacci")
+   (check-equal? (stream-until (lambda (x) (< x 2))
+                               (stream-map (lambda (x) (* x 2)) fibonacci))
+                 2
+                 "stream-map test using stream-until & fibonacci")
+   (check-equal? (stream-until (lambda (x) (< x 60))
+                               (stream-map (lambda (x) (* x 2)) fibonacci))
+                 68
+                 "stream-map test using stream-until & fibonacci")
+   (check-equal? (stream-until (lambda (x) (< x 2000))
+                               (stream-map (lambda (x) (* x 2)) fibonacci))
+                 3194
+                 "stream-map test using stream-until & fibonacci")
+   ))
 (require rackunit/text-ui)
 ;; runs the test
 (run-tests tests)

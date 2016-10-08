@@ -39,4 +39,9 @@
         (stream-until f (cdr stream))
         val)))
 
+;; Write a function stream-map that takes a function f and a stream s, and returns
+;; a new stream whose values are the result of applying f to the values produced by s.
+(define (stream-map f s)
+  (letrec ([aux (lambda (x) (cons (f (car (x))) (lambda () (aux (cdr (x))))))])
+    (lambda () (aux s))))
   
