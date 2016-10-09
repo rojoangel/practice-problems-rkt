@@ -1,5 +1,7 @@
 #lang racket
 
+(require "pp1.rkt") ; to make available fold-tree to be used in either-fold
+
 (provide (all-defined-out))
 
 ; Write a function crazy-sum that takes a list of numbers and adds them all together,
@@ -17,3 +19,11 @@
                       [(number? (car xs)) (f (op acc (car xs)) op (cdr xs))]
                       [#t (f acc (car xs) (cdr xs))]))])
     (f 0 + xs)))
+
+; Write a function either-fold that is like fold for lists or binary trees as defined
+; above except that it works for both of them. Give an appropriate error message if
+; the third argument to either-fold is neither a list nor a binary tree.
+(define (either-fold binary-function acc list-or-tree)
+  (cond [(list? list-or-tree) (foldl binary-function acc list-or-tree)]
+        [(well-formed-tree? list-or-tree) (fold-tree binary-function acc list-or-tree)]
+        [#t (error "not a list or tree")]))
