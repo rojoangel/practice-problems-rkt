@@ -58,4 +58,17 @@
 (define (fold-tree f acc t)
   (if (btree-leaf? t)
       acc
-      (fold-tree f (fold-tree f (f acc (btree-node-value t)) (btree-node-left t)) (btree-node-right t))))
+      (fold-tree f
+                 (fold-tree f (f acc (btree-node-value t)) (btree-node-left t))
+                 (btree-node-right t))))
+
+; Reimplement fold-tree as a curried function.
+(define (curried-fold-tree)
+  (lambda (f)
+    (lambda (acc)
+      (lambda (t)
+        (if (btree-leaf? t)
+            acc
+            (fold-tree f
+                       (fold-tree f (f acc (btree-node-value t)) (btree-node-left t))
+                       (btree-node-right t)))))))

@@ -213,12 +213,19 @@
                             (btree-node 4 (btree-node 5 (btree-leaf) (btree-leaf)) (btree-leaf)))
                  18
                  "fold-tree folds btree-node test")
+
    (check-equal? (fold-tree (lambda (x y) (* x y))
                             7
                             (btree-node 4 (btree-node 5 (btree-leaf) (btree-leaf)) (btree-leaf)))
                  140
                  "fold-tree folds btree-node test")
-   ))
+
+   ; curried-fold-tree tests
+   (check-equal? ((((curried-fold-tree) (lambda (x y) (+ x y 1)))
+                            99)
+                            (btree-leaf))
+                 99
+                 "fold-tree returns acc for btree-leaf")))
 
 (require rackunit/text-ui)
 ;; runs the test
