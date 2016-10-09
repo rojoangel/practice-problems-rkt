@@ -38,3 +38,12 @@
         [#t (btree-node (btree-node-value t)
                      (prune-at-v (btree-node-left t) v)
                      (prune-at-v (btree-node-right t) v))]))
+
+; Write a function well-formed-tree? that takes any value and returns #t if and only if
+; the value is legal binary tree as defined above.
+(define (well-formed-tree? t)
+  (cond [(btree-leaf? t) #t]
+        [(and (btree-node? t)
+              (well-formed-tree? (btree-node-left t))
+              (well-formed-tree? (btree-node-right t))) #t]
+        [#t #f]))

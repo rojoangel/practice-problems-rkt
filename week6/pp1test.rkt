@@ -175,8 +175,31 @@
      (check-equal? (prune-at-v tree 2) tree-pruned-at-2 "prune-at-v 2 test")
      (check-equal? (prune-at-v tree 3) tree-pruned-at-3 "prune-at-v 3 test")
      (check-equal? (prune-at-v tree 4) tree-pruned-at-4 "prune-at-v 4 test")
-     (check-equal? (prune-at-v tree 5) tree-pruned-at-5 "prune-at-v 5 test")
-     )
+     (check-equal? (prune-at-v tree 5) tree-pruned-at-5 "prune-at-v 5 test"))
+
+   ; well-formed-tree tests
+   (check-equal? (well-formed-tree? #t) #f "#t is not a well-formed tree")
+   (check-equal? (well-formed-tree? (btree-leaf)) #t "well-formed btree-leaf")
+   (check-equal? (well-formed-tree? (btree-node #t #t #t)) #f "bad-formed btree-node")
+   (check-equal? (well-formed-tree? (btree-node #t (btree-leaf) (btree-leaf))) #t "well-formed btree-node")
+   (check-equal? (well-formed-tree?
+                  (btree-node 1
+                              (btree-node 2
+                                          (btree-node 3
+                                                      (btree-leaf)
+                                                      (btree-leaf))
+                                          (btree-node 4
+                                                      (btree-leaf)
+                                                      (btree-leaf)))
+                              (btree-node 3
+                                          (btree-node 5
+                                                      (btree-leaf)
+                                                      (btree-leaf))
+                                          (btree-node 5
+                                                      (btree-leaf)
+                                                      #t))))
+                 #f
+                 "deeply nested bad-formed btree-node")
    ))
 
 (require rackunit/text-ui)
