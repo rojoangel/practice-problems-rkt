@@ -17,3 +17,12 @@
                  (if (> left-height right-height)
                      left-height
                      right-height)))]))
+
+; Write a function sum-tree that takes binary tree and sums all the values in all the
+; nodes. (Assume the value fields all hold numbers, i.e., values that you can pass to
+; +).
+(define (sum-tree t)
+  (cond [(btree-leaf? t) 0]
+        [#t (let ([left-sum (sum-tree (btree-node-left t))]
+                  [right-sum (sum-tree (btree-node-right t))])
+              (+ (btree-node-value t) (+ left-sum right-sum)))]))
