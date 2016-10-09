@@ -27,3 +27,14 @@
   (cond [(list? list-or-tree) (foldl binary-function acc list-or-tree)]
         [(well-formed-tree? list-or-tree) (fold-tree binary-function acc list-or-tree)]
         [#t (error "not a list or tree")]))
+
+; Write a function flatten that takes a list and flattens its internal structure,
+; merging all the lists inside into a single flat list. This should work for lists
+; nested to arbitrary depth. For example,
+; (flatten (list 1 2 (list (list 3 4) 5 (list (list 6) 7 8)) 9 (list 10)))
+; should evaluate to
+; (list 1 2 3 4 5 6 7 8 9 10).
+(define (flatten xs)
+  (cond [(null? xs) null]
+        [(list? (car xs)) (append (flatten (car xs)) (flatten (cdr xs)))]
+        [#t (cons (car xs) (flatten (cdr xs)))]))

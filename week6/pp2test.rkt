@@ -34,7 +34,18 @@
               "either-fold raises error if not a list or btree")
    (check-exn exn:fail? (lambda()
                           (either-fold (lambda (x y) (+ x y)) 0 (btree-node 5 6 7)))
-              "either-fold raises error if not a list or btree")))
+              "either-fold raises error if not a list or btree")
+
+   ; flatten tests
+   (check-equal? (flatten null)
+                 null
+                 "flatten flattens empty list")
+   (check-equal? (flatten (list 1 2 3 4 5 6 7 8 9 10))
+                 (list 1 2 3 4 5 6 7 8 9 10)
+                 "flatten flattens flat list")
+   (check-equal? (flatten (list 1 2 (list (list 3 4) 5 (list (list 6) 7 8)) 9 (list 10)))
+                 (list 1 2 3 4 5 6 7 8 9 10)
+                 "flatten flattens nested list")))
 
 (require rackunit/text-ui)
 ;; runs the test
