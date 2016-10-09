@@ -26,3 +26,17 @@
         [#t (let ([left-sum (sum-tree (btree-node-left t))]
                   [right-sum (sum-tree (btree-node-right t))])
               (+ (btree-node-value t) (+ left-sum right-sum)))]))
+
+; Write a function prune-at-v that takes a binary tree t and a value v and produces a
+; new binary tree with structure the same as t except any node with value equal to v
+; (use Racket's equal?) is replaced (along with all its descendants) by a leaf.
+(define (prune-at-v t v)
+  (cond [(and (btree-node? t) (equal? (btree-node-value t) v))
+         (btree-leaf)]
+        [(btree-node? t)
+         (btree-node (btree-node-value t)
+                     (prune-at-v (btree-node-left t) v)
+                     (prune-at-v (btree-node-right t) v))]
+        [#t t]))
+                     
+      
