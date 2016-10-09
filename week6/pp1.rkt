@@ -47,3 +47,15 @@
               (well-formed-tree? (btree-node-left t))
               (well-formed-tree? (btree-node-right t))) #t]
         [#t #f]))
+
+; Write a function fold-tree that takes a two-argument function, an initial accumulator,
+; and a binary tree and implements a fold over the tree, applying the function to all
+; the values. For example,
+; (fold-tree (lambda (x y) (+ x y 1)) 7
+;   (btree-node 4 (btree-node 5 (btree-leaf) (btree-leaf)) (btree-leaf)))
+; would evaluate to 18. You can traverse the tree in any order you like (though it does
+; affect the result of a call to fold-tree if the function passed isn't associative).
+(define (fold-tree f acc t)
+  (if (btree-leaf? t)
+      acc
+      (fold-tree f (fold-tree f (f acc (btree-node-value t)) (btree-node-left t)) (btree-node-right t))))
